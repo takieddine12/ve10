@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/verzion"
+            android:fontFamily="@font/canada_big"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_to_nsmart_family"
+            android:fontFamily="@font/canada_big"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="40dp"/>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.app.v.WaveView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/content1"
+                        android:visibility="visible"
+                        app:rb_color="#0099CC"
+                        app:rb_radius="10dp"
+                        app:rb_rippleAmount="5"
+                        app:rb_duration="5000"
+                        app:rb_scale="6">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/wave1"
+                            android:src="@drawable/baseline_add_24"/>
+
+                    </com.app.v.WaveView>
+                    <com.app.v.WaveView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/content2"
+                        android:visibility="visible"
+                        app:rb_color="#ad60ba"
+                        app:rb_radius="10dp"
+                        app:rb_rippleAmount="5"
+                        app:rb_duration="5000"
+                        app:rb_scale="6">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/wave2"
+                            android:src="@drawable/baseline_info_24"/>
+
+                    </com.app.v.WaveView>
+                    <com.app.v.WaveView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/content3"
+                        android:visibility="visible"
+                        app:rb_color="#77c27b"
+                        app:rb_radius="10dp"
+                        app:rb_rippleAmount="5"
+                        app:rb_duration="5000"
+                        app:rb_scale="6">
+
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/baseline_airplanemode_active_24"/>
+
+                    </com.app.v.WaveView>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.app.v.WaveView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/content4"
+                        android:visibility="visible"
+                        app:rb_color="#f5716a"
+                        app:rb_radius="10dp"
+                        app:rb_rippleAmount="5"
+                        app:rb_duration="5000"
+                        app:rb_scale="6">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/baseline_favorite_24"/>
+
+                    </com.app.v.WaveView>
+                    <com.app.v.WaveView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/content5"
+                        android:visibility="visible"
+                        app:rb_color="#fcb346"
+                        app:rb_radius="10dp"
+                        app:rb_rippleAmount="5"
+                        app:rb_duration="5000"
+                        app:rb_scale="6">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/baseline_music_note_24"/>
+
+                    </com.app.v.WaveView>
+                    <com.app.v.WaveView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:id="@+id/content6"
+                        android:visibility="visible"
+                        app:rb_color="#add2ad"
+                        app:rb_radius="10dp"
+                        app:rb_rippleAmount="5"
+                        app:rb_duration="5000"
+                        app:rb_scale="6">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/wave3"
+                            android:src="@drawable/baseline_place_24"/>
+
+                    </com.app.v.WaveView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.app.v.BubbleEmitterView
+                android:id="@+id/bubbleEmitter"
+                android:layout_width="wrap_content"
+                android:layout_height="380dp" />
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/lock"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:src="@drawable/lock"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
