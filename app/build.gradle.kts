@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.biometric:biometric:1.2.0-alpha04")
     implementation (libs.glide)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

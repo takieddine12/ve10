@@ -14,13 +14,23 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:orientation="vertical"
         android:layout_marginBottom="30dp">
 
         <NumberPicker
             android:id="@+id/numberPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:solidColor="@color/white"
             android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/biometric"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/biometric"
+            android:tint="@color/white"
+            android:layout_marginTop="30dp"/>
 
     </LinearLayout>
 

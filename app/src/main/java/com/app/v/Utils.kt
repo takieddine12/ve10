@@ -12,7 +12,6 @@ object Utils {
 
     private  var alarmManager : AlarmManager? = null
     private var pendingIntent : PendingIntent? = null
-    val airPlaneStatus : MutableStateFlow<Boolean> = MutableStateFlow(false)
     fun initAlarmManager(context : Context){
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     }
