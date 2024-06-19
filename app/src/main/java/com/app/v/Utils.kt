@@ -22,7 +22,7 @@ object Utils {
         pendingIntent = PendingIntent.getActivity(context, 0,intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        alarmManager?.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() +15000, pendingIntent!!)
+        alarmManager?.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, pendingIntent!!)
     }
     fun cancelAlarManager(){
         pendingIntent?.let {
