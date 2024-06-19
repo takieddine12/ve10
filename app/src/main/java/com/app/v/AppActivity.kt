@@ -1,31 +1,36 @@
 package com.app.v
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 class AppActivity : AppCompatActivity() {
 
-    private lateinit var alarmManager : AlarmManager
+    private var selectedDuration = 0
+    private val timeIntervals = arrayOf("15 min", "30 min", "45 min", "60 min", "75 min", "90 min", "120 min")
+    private lateinit var numberPicker : NumberPicker
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app)
 
-        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        numberPicker = findViewById(R.id.numberPicker)
+        numberPicker.minValue = 0
+        numberPicker.maxValue = timeIntervals.size - 1
+        numberPicker.displayedValues = timeIntervals
+        numberPicker.wrapSelectorWheel = true;
 
-        // REFERRENCE VIEWS
         val btn0 = findViewById<TextView>(R.id.btn0)
         val btn1 = findViewById<TextView>(R.id.btn1)
         val btn2 = findViewById<TextView>(R.id.btn2)
@@ -42,29 +47,40 @@ class AppActivity : AppCompatActivity() {
         val passcodeBuilder = StringBuilder()
         val numberButtons = listOf(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
 
+        numberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            Toast.makeText(this,"Selected : " + numberPicker.value,Toast.LENGTH_LONG).show()
+            val selectedValueIndex = numberPicker.value
+            val selectedInterval = timeIntervals[selectedValueIndex]
+            val minutes: Int = convertIntervalToMinutes(selectedInterval)
+            selectedDuration = minutes
+            Log.d("TAG", "Selected Value $selectedDuration")
+        }
 
-        // APPEND USER INPUTS
         numberButtons.forEach { button ->
             button.setOnClickListener {
                 passcodeBuilder.append(button.text)
                 edit.setText(passcodeBuilder.toString())
             }
         }
-        // CHECK FOR PASSCODE
+
         tick.setOnClickListener {
             val passcode = passcodeBuilder.toString()
+            if (selectedDuration == 0){
+                Toast.makeText(this,"Please select a duration",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             if (passcode == "1234") {
                 edit.text.clear()
                 stopLockTask()
-                Utils.fireAlarmManager(this)
+                Utils.fireAlarmManager(this,selectedDuration)
                 finishAffinity()
-            } else {
+            }
+            else {
                 Intent(this, HomeActivity::class.java).apply {
                     startActivity(this)
                 }
             }
         }
-
         // SET DRAWABLE END COLOR
         val greenColor = ContextCompat.getColor(this, R.color.greenColor)
         val colorFilter = PorterDuffColorFilter(greenColor, PorterDuff.Mode.SRC_IN)
@@ -85,5 +101,8 @@ class AppActivity : AppCompatActivity() {
             false
         }
     }
-
+    private fun convertIntervalToMinutes(interval: String): Int {
+        return interval.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+            .toTypedArray()[0].toInt()
+    }
 }
