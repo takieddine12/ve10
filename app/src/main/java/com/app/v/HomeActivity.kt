@@ -66,7 +66,6 @@ class HomeActivity : AppCompatActivity() {
         }
         startLockTask()
 
-
     }
 
     override fun onStart() {

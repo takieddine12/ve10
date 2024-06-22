@@ -14,14 +14,10 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
-
-
     private lateinit var gifImage : ImageView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         Handler().postDelayed({
             Intent(this,AdminActivity::class.java).apply {
@@ -33,8 +29,5 @@ class MainActivity : AppCompatActivity() {
         Glide.with(this)
             .load(R.raw.gif)
             .into(gifImage)
-
     }
-
-
 }

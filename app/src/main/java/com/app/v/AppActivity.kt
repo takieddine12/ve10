@@ -1,10 +1,15 @@
 package com.app.v
 
 import android.annotation.SuppressLint
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -17,7 +22,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import java.lang.reflect.Field
 import java.util.concurrent.Executor
+
 
 class AppActivity : AppCompatActivity() {
     private lateinit var biometricPrompt: BiometricPrompt
@@ -38,7 +45,7 @@ class AppActivity : AppCompatActivity() {
         numberPicker.maxValue = timeIntervals.size - 1
         numberPicker.displayedValues = timeIntervals
         numberPicker.wrapSelectorWheel = true
-        numberPicker.textColor = Color.WHITE
+        setNumberPickerTextColor(numberPicker)
 
         val btn0 = findViewById<TextView>(R.id.btn0)
         val btn1 = findViewById<TextView>(R.id.btn1)
@@ -79,8 +86,10 @@ class AppActivity : AppCompatActivity() {
             if (passcode == "1234") {
                 edit.text.clear()
                 stopLockTask()
+                ///Utils.disableCamera(this,true)
+                setCameraDisabled(this)
                 Utils.fireAlarmManager(this,selectedDuration)
-                finishAffinity()
+               finishAffinity()
             }
             else {
                 Intent(this, HomeActivity::class.java).apply {
@@ -89,10 +98,7 @@ class AppActivity : AppCompatActivity() {
             }
         }
 
-        val greenColor = ContextCompat.getColor(this, R.color.greenColor)
-        val colorFilter = PorterDuffColorFilter(greenColor, PorterDuff.Mode.SRC_IN)
-        edit.compoundDrawablesRelative[2]?.colorFilter = colorFilter
-
+        addRemoveIcon(edit)
         edit.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 val drawableEnd = edit.compoundDrawablesRelative[2]
@@ -113,6 +119,13 @@ class AppActivity : AppCompatActivity() {
             }
             unLockBiometric()
         }
+
+    }
+
+    private fun addRemoveIcon(edit : EditText){
+        val greenColor = ContextCompat.getColor(this, R.color.greenColor)
+        val colorFilter = PorterDuffColorFilter(greenColor, PorterDuff.Mode.SRC_IN)
+        edit.compoundDrawablesRelative[2]?.colorFilter = colorFilter
     }
     private fun convertIntervalToMinutes(interval: String): Int {
         return interval.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
@@ -171,5 +184,33 @@ class AppActivity : AppCompatActivity() {
             }
         }
     }
+    private fun setCameraDisabled(context: Context) {
+       if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P){
+           val devicePolicyManager = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+           val compName = ComponentName(context, DeviceAdminReceiver::class.java)
+           devicePolicyManager.setCameraDisabled(compName, true)
+       }
+    }
+    private fun setNumberPickerTextColor(numberPicker: NumberPicker) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            numberPicker.textColor = Color.WHITE // Available on Android 10 and above
+        } else {
+            try {
+                val selectorWheelPaintField: Field = numberPicker.javaClass.getDeclaredField("mSelectorWheelPaint")
+                selectorWheelPaintField.isAccessible = true
+                (selectorWheelPaintField.get(numberPicker) as Paint).color = Color.WHITE
 
+                val pickerFields: Array<Field> = NumberPicker::class.java.declaredFields
+                for (field in pickerFields) {
+                    if (field.name == "mInputText") {
+                        field.isAccessible = true
+                        (field.get(numberPicker) as EditText).setTextColor(Color.WHITE)
+                    }
+                }
+                numberPicker.invalidate()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 }
